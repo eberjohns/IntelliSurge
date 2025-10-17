@@ -3,404 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IntelliSurge - Interactive Demo</title>
+    <title>IntelliSurge - Proactive Patient Surge Management</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8f9fa;
-        }
-        .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        .nav-link {
-            transition: color 0.3s, border-bottom-color 0.3s;
-        }
-        .nav-link.active {
-            color: #ffffff;
-            border-bottom-color: #a78bfa;
-        }
-        .nav-link:hover {
-            color: #e0e0e0;
-        }
-        .page {
-            display: none;
-        }
-        .page.active {
-            display: block;
-        }
-        .kpi-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .kpi-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="text-gray-800">
+<body class="bg-gray-50">
 
-    <!-- Header & Navigation -->
-    <header class="gradient-bg text-white shadow-lg sticky top-0 z-50">
-        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+    <header class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <h1 class="text-2xl font-bold">IntelliSurge</h1>
-            <div class="hidden md:flex items-center space-x-8">
-                <a href="#home" class="nav-link text-lg font-medium border-b-2 border-transparent pb-1 active" onclick="showPage('home', this)">Home</a>
-                <a href="#dashboard" class="nav-link text-lg font-medium border-b-2 border-transparent pb-1" onclick="showPage('dashboard', this)">Live Demo</a>
-                <a href="#details" class="nav-link text-lg font-medium border-b-2 border-transparent pb-1" onclick="showPage('details', this)">How It Works</a>
-            </div>
-            <button id="mobile-menu-button" class="md:hidden focus:outline-none">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-            </button>
-        </nav>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
-            <a href="#home" class="block py-2 text-lg" onclick="showPage('home', this); closeMobileMenu();">Home</a>
-            <a href="#dashboard" class="block py-2 text-lg" onclick="showPage('dashboard', this); closeMobileMenu();">Live Demo</a>
-            <a href="#details" class="block py-2 text-lg" onclick="showPage('details', this); closeMobileMenu();">How It Works</a>
         </div>
     </header>
 
     <main>
-        <!-- Home Page -->
-        <section id="home" class="page active">
-            <div class="text-center container mx-auto px-6 py-20">
-                <h2 class="text-4xl md:text-6xl font-bold leading-tight mb-4 text-gray-900">Proactively Manage Patient Surges</h2>
-                <p class="text-lg md:text-2xl font-light text-gray-600 max-w-3xl mx-auto">IntelliSurge uses predictive analytics to empower hospitals, turning reactive crisis management into proactive, data-driven preparation.</p>
-                <button class="mt-8 px-8 py-3 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 transition duration-300" onclick="showPage('dashboard', document.querySelector('a[href=\'#dashboard\']'))">
-                    View Live Demo
-                </button>
-            </div>
-            <!-- Features from original page -->
-            <div class="bg-white py-20">
-                <div class="container mx-auto px-6">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        <!-- Feature 1: Predictive Alerts -->
-                        <div class="text-center p-6">
-                            <div class="flex items-center justify-center h-16 w-16 rounded-full bg-indigo-100 text-indigo-600 mb-4 mx-auto">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
-                            </div>
-                            <h3 class="text-xl font-semibold mb-2">Predictive Alerts</h3>
-                            <p class="text-gray-600">AI model forecasts patient inflow 24-72 hours in advance.</p>
-                        </div>
-                        <!-- Feature 2: Resource Allocation -->
-                        <div class="text-center p-6">
-                            <div class="flex items-center justify-center h-16 w-16 rounded-full bg-indigo-100 text-indigo-600 mb-4 mx-auto">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
-                            </div>
-                            <h3 class="text-xl font-semibold mb-2">Resource Allocation</h3>
-                            <p class="text-gray-600">Dynamically recommends optimal staffing, bed, and equipment.</p>
-                        </div>
-                        <!-- Feature 3: Real-Time Tracking -->
-                        <div class="text-center p-6">
-                            <div class="flex items-center justify-center h-16 w-16 rounded-full bg-indigo-100 text-indigo-600 mb-4 mx-auto">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
-                            </div>
-                            <h3 class="text-xl font-semibold mb-2">Real-Time Tracking</h3>
-                            <p class="text-gray-600">Mobile app for staff enables efficient patient triage and tracking.</p>
-                        </div>
-                        <!-- Feature 4: Communication Network -->
-                        <div class="text-center p-6">
-                             <div class="flex items-center justify-center h-16 w-16 rounded-full bg-indigo-100 text-indigo-600 mb-4 mx-auto">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                            </div>
-                            <h3 class="text-xl font-semibold mb-2">Communication Network</h3>
-                            <p class="text-gray-600">Facilitates load-balancing patient transfers between facilities.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <div class="container mx-auto px-6 text-center py-24">
+            
+            <h2 class="text-4xl md:text-6xl font-bold text-gray-900 leading-tight mb-4">From Reactive to Predictive Healthcare</h2>
+            <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-10">IntelliSurge provides a live, data-driven dashboard to help hospitals anticipate and manage patient surges before they become crises.</p>
+            <a href="dashboard.html" class="inline-block bg-indigo-600 text-white font-semibold px-8 py-4 rounded-lg shadow-xl hover:bg-indigo-700 transition-transform transform hover:-translate-y-1 duration-300">
+                Launch Live Dashboard &rarr;
+            </a>
+        </div>
 
-        <!-- Interactive Dashboard Page -->
-        <section id="dashboard" class="page">
-            <div class="container mx-auto px-6 py-12">
-                <div class="text-center mb-10">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Live Hospital Status Dashboard</h2>
-                    <p class="mt-4 text-lg text-gray-600">Simulate a patient surge event and see how IntelliSurge provides actionable insights in real-time.</p>
-                </div>
-
-                <!-- Simulator Control -->
-                <div class="max-w-2xl mx-auto bg-white p-6 rounded-xl shadow-lg mb-10">
-                    <label for="surge-slider" class="block text-lg font-semibold text-gray-700">Simulate Predicted Surge Risk</label>
-                    <p class="text-sm text-gray-500 mb-4">Drag the slider to see how the dashboard reacts to different threat levels.</p>
-                    <input id="surge-slider" type="range" min="0" max="100" value="20" class="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer range-lg">
-                    <div class="flex justify-between text-xs text-gray-500 mt-2">
-                        <span>Low</span>
-                        <span>Moderate</span>
-                        <span>High</span>
-                        <span>Critical</span>
-                    </div>
-                </div>
-
-                <!-- KPI Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-                    <div class="kpi-card bg-white p-6 rounded-xl shadow-md text-center">
-                        <h3 class="text-lg font-semibold text-gray-500">Predicted Surge Level</h3>
-                        <p id="surge-level" class="text-4xl font-bold text-green-600 mt-2">Low</p>
-                    </div>
-                    <div class="kpi-card bg-white p-6 rounded-xl shadow-md text-center">
-                        <h3 class="text-lg font-semibold text-gray-500">Bed Occupancy Forecast</h3>
-                        <p id="bed-occupancy" class="text-4xl font-bold text-gray-800 mt-2">65%</p>
-                    </div>
-                     <div class="kpi-card bg-white p-6 rounded-xl shadow-md text-center">
-                        <h3 class="text-lg font-semibold text-gray-500">Recommended Staffing</h3>
-                        <p id="staff-level" class="text-4xl font-bold text-gray-800 mt-2">120</p>
-                    </div>
-                    <div class="kpi-card bg-white p-6 rounded-xl shadow-md text-center">
-                        <h3 class="text-lg font-semibold text-gray-500">Ventilators Needed</h3>
-                        <p id="equipment-level" class="text-4xl font-bold text-gray-800 mt-2">15</p>
-                    </div>
-                </div>
-
-                <!-- Chart and Recommendations -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                    <div class="bg-white p-6 rounded-xl shadow-lg">
-                        <h3 class="text-xl font-semibold mb-4 text-center">Predicted Admissions (Next 72 Hours)</h3>
-                        <canvas id="admissionsChart"></canvas>
-                    </div>
-                    <div class="bg-white p-6 rounded-xl shadow-lg">
-                        <h3 class="text-xl font-semibold mb-4 text-center">Actionable Recommendations</h3>
-                        <div id="recommendations" class="space-y-4">
-                            <!-- JS will populate this -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- How It Works Page -->
-        <section id="details" class="page">
-            <div class="container mx-auto px-6 py-20">
+        <div class="bg-white py-20">
+            <div class="container mx-auto px-6">
                 <div class="text-center mb-16">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">How IntelliSurge Works</h2>
-                    <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Our system is built on a robust, multi-layered technology stack designed for accuracy, scalability, and real-time performance.</p>
+                    <h3 class="text-3xl font-bold text-gray-900">A Winning Hackathon Submission</h3>
+                    <p class="mt-3 text-lg text-gray-600">Our prototype is built with powerful, real-world features.</p>
                 </div>
-                
-                <div class="max-w-4xl mx-auto">
-                    <!-- Step 1: Data Ingestion -->
-                    <div class="flex items-center mb-12">
-                        <div class="flex-shrink-0 h-16 w-16 rounded-full bg-indigo-600 text-white flex items-center justify-center text-2xl font-bold shadow-md">1</div>
-                        <div class="ml-6">
-                            <h3 class="text-2xl font-semibold">Data Ingestion & Integration</h3>
-                            <p class="text-gray-600 mt-2">We aggregate data from multiple sources: historical hospital admission records (EHRs), real-time public health alerts (e.g., CDC, local health departments), and environmental data like weather patterns and seasonal flu activity.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                    <div class="text-center">
+                        <div class="feature-icon bg-indigo-100 text-indigo-600">
+                            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                         </div>
+                        <h4 class="text-xl font-semibold mt-4">Live GIS Mapping</h4>
+                        <p class="text-gray-600 mt-2">Visualizes real-time stress levels across a network of city hospitals using Leaflet.js.</p>
                     </div>
-                    <!-- Step 2: Predictive Modeling -->
-                    <div class="flex items-center mb-12">
-                        <div class="flex-shrink-0 h-16 w-16 rounded-full bg-indigo-600 text-white flex items-center justify-center text-2xl font-bold shadow-md">2</div>
-                        <div class="ml-6">
-                            <h3 class="text-2xl font-semibold">AI-Powered Predictive Modeling</h3>
-                            <p class="text-gray-600 mt-2">Our core machine learning model (utilizing time-series analysis like LSTM) processes this data to identify patterns and accurately forecast patient admission volumes and types of care required up to 72 hours in advance.</p>
+                    <div class="text-center">
+                        <div class="feature-icon bg-indigo-100 text-indigo-600">
+                             <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                         </div>
+                        <h4 class="text-xl font-semibold mt-4">Real-World API Integration</h4>
+                        <p class="text-gray-600 mt-2">Pulls live weather from WeatherAPI.com and health news from NewsAPI to calculate a dynamic surge score.</p>
                     </div>
-                     <!-- Step 3: Actionable Insights -->
-                    <div class="flex items-center">
-                        <div class="flex-shrink-0 h-16 w-16 rounded-full bg-indigo-600 text-white flex items-center justify-center text-2xl font-bold shadow-md">3</div>
-                        <div class="ml-6">
-                            <h3 class="text-2xl font-semibold">Actionable Insights & Visualization</h3>
-                            <p class="text-gray-600 mt-2">The predictions are translated into simple, actionable recommendations for staffing, resource allocation, and operational protocols, presented through our intuitive web and mobile dashboards for hospital administrators and staff.</p>
+                    <div class="text-center">
+                        <div class="feature-icon bg-indigo-100 text-indigo-600">
+                            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"></path></svg>
                         </div>
-                    </div>
-                </div>
-
-                <!-- Tech Stack Section -->
-                <div class="text-center mt-20">
-                     <h3 class="text-2xl font-semibold text-gray-900 mb-8">Technology Stack</h3>
-                     <div class="flex flex-wrap justify-center items-center gap-x-6 gap-y-4">
-                        <span class="bg-gray-200 text-gray-800 text-md font-medium px-4 py-2 rounded-full">Python</span>
-                        <span class="bg-gray-200 text-gray-800 text-md font-medium px-4 py-2 rounded-full">Flask</span>
-                        <span class="bg-gray-200 text-gray-800 text-md font-medium px-4 py-2 rounded-full">React</span>
-                        <span class="bg-gray-200 text-gray-800 text-md font-medium px-4 py-2 rounded-full">React Native</span>
-                        <span class="bg-gray-200 text-gray-800 text-md font-medium px-4 py-2 rounded-full">Node.js</span>
-                        <span class="bg-gray-200 text-gray-800 text-md font-medium px-4 py-2 rounded-full">MongoDB</span>
-                        <span class="bg-gray-200 text-gray-800 text-md font-medium px-4 py-2 rounded-full">Tailwind CSS</span>
-                        <span class="bg-gray-200 text-gray-800 text-md font-medium px-4 py-2 rounded-full">TensorFlow</span>
+                        <h4 class="text-xl font-semibold mt-4">Historical Trend Analysis</h4>
+                        <p class="text-gray-600 mt-2">A dedicated view to track and analyze patient surge trends over time, powered by Chart.js.</p>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
     </main>
 
-    <footer class="bg-gray-800 text-white mt-20">
+    <footer class="bg-gray-800 text-white">
         <div class="container mx-auto px-6 py-8 text-center">
-            <p>&copy; 2025 IntelliSurge Team. All rights reserved.</p>
-            <p class="text-sm text-gray-400 mt-2">A Submission for MumbaiHacks</p>
+            <p>&copy; 2025 IntelliSurge Team. Built for MumbaiHacks.</p>
         </div>
     </footer>
 
-    <script>
-        // --- Page Navigation ---
-        const pages = document.querySelectorAll('.page');
-        const navLinks = document.querySelectorAll('.nav-link');
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        function showPage(pageId, clickedLink) {
-            event.preventDefault();
-            pages.forEach(page => {
-                page.classList.remove('active');
-            });
-            document.getElementById(pageId).classList.add('active');
-
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-            });
-            if (clickedLink) {
-                clickedLink.classList.add('active');
-                 // Also update the corresponding link in the other menu (desktop/mobile)
-                const otherLink = document.querySelector(`.nav-link[href="${clickedLink.getAttribute('href')}"]:not(.active)`);
-                if(otherLink) otherLink.classList.add('active');
-            }
-        }
-        
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-
-        function closeMobileMenu() {
-            mobileMenu.classList.add('hidden');
-        }
-
-        // --- Dashboard Interactivity ---
-        const slider = document.getElementById('surge-slider');
-        const surgeLevelEl = document.getElementById('surge-level');
-        const bedOccupancyEl = document.getElementById('bed-occupancy');
-        const staffLevelEl = document.getElementById('staff-level');
-        const equipmentLevelEl = document.getElementById('equipment-level');
-        const recommendationsEl = document.getElementById('recommendations');
-
-        const chartCtx = document.getElementById('admissionsChart').getContext('2d');
-        let admissionsChart;
-
-        const baseAdmissions = [10, 12, 11, 15, 14, 18, 20, 22, 25, 23, 28, 30, 32, 35, 33, 38, 40, 42, 45, 48, 50, 47, 52, 55];
-        
-        function generateChartData(surgeValue) {
-            const multiplier = 1 + (surgeValue / 100) * 2.5; // Scale admissions based on surge
-            const noise = 0.1;
-            return baseAdmissions.map(val => {
-                const randomFactor = 1 + (Math.random() - 0.5) * noise;
-                return Math.round(val * multiplier * randomFactor);
-            });
-        }
-        
-        function createRecommendation(icon, text, colorClass) {
-            return `
-                <div class="flex items-start p-4 rounded-lg ${colorClass}">
-                    <div class="flex-shrink-0">${icon}</div>
-                    <p class="ml-3 text-md font-medium">${text}</p>
-                </div>
-            `;
-        }
-
-        const icons = {
-            info: `<svg class="w-6 h-6 text-blue-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`,
-            warning: `<svg class="w-6 h-6 text-yellow-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>`,
-            critical: `<svg class="w-6 h-6 text-red-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"></path></svg>`
-        }
-
-        function updateDashboard(value) {
-            let level, color, recommendationsHtml = '';
-
-            // Update KPIs
-            const bedOccupancy = Math.min(99, Math.round(65 + (value / 100) * 34));
-            bedOccupancyEl.textContent = `${bedOccupancy}%`;
-            staffLevelEl.textContent = 120 + Math.round((value / 100) * 80);
-            equipmentLevelEl.textContent = 15 + Math.round((value / 100) * 50);
-
-            if (value <= 33) {
-                level = 'Low';
-                color = 'text-green-600';
-                recommendationsHtml += createRecommendation(icons.info, 'Standard operating procedures are sufficient. Monitor incoming data.', 'bg-blue-100');
-                recommendationsHtml += createRecommendation(icons.info, 'Ensure all standard equipment is serviced and ready.', 'bg-blue-100');
-            } else if (value <= 66) {
-                level = 'Moderate';
-                color = 'text-yellow-500';
-                recommendationsHtml += createRecommendation(icons.warning, 'Alert on-call staff to be on standby for potential call-in.', 'bg-yellow-100');
-                recommendationsHtml += createRecommendation(icons.warning, 'Prepare to convert designated overflow areas into patient wards.', 'bg-yellow-100');
-                recommendationsHtml += createRecommendation(icons.info, 'Review inventory of critical supplies (PPE, ventilators).', 'bg-blue-100');
-            } else if (value <= 90) {
-                level = 'High';
-                color = 'text-orange-500';
-                recommendationsHtml += createRecommendation(icons.critical, 'Call in all on-call staff and implement surge staffing plan.', 'bg-red-100');
-                recommendationsHtml += createRecommendation(icons.warning, 'Place all non-essential elective surgeries on standby.', 'bg-yellow-100');
-                recommendationsHtml += createRecommendation(icons.warning, 'Initiate contact with regional hospitals to assess their capacity.', 'bg-yellow-100');
-            } else {
-                level = 'Critical';
-                color = 'text-red-600';
-                recommendationsHtml += createRecommendation(icons.critical, 'Activate full hospital emergency command center.', 'bg-red-100');
-                recommendationsHtml += createRecommendation(icons.critical, 'Cancel all elective procedures. Divert non-critical patients.', 'bg-red-100');
-                recommendationsHtml += createRecommendation(icons.critical, 'Request regional resource support and prepare for patient transfers.', 'bg-red-100');
-            }
-
-            surgeLevelEl.textContent = level;
-            surgeLevelEl.className = `text-4xl font-bold mt-2 ${color}`;
-            recommendationsEl.innerHTML = recommendationsHtml;
-            
-            // Update Chart
-            admissionsChart.data.datasets[0].data = generateChartData(value);
-            admissionsChart.data.datasets[0].borderColor = color.replace('text-', '').replace('-600', '-500').replace('yellow', 'yellow').replace('orange', 'orange').replace('red', 'red').replace('green','green');
-            admissionsChart.update();
-        }
-
-        function initializeDashboard() {
-            admissionsChart = new Chart(chartCtx, {
-                type: 'line',
-                data: {
-                    labels: Array.from({ length: 24 }, (_, i) => `${i * 3}h`),
-                    datasets: [{
-                        label: 'Predicted Admissions',
-                        data: [],
-                        fill: false,
-                        borderColor: 'rgb(75, 192, 192)',
-                        tension: 0.3
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        },
-                        x: {
-                           title: {
-                               display: true,
-                               text: 'Time from Now'
-                           }
-                        }
-                    }
-                }
-            });
-
-            slider.addEventListener('input', (e) => updateDashboard(e.target.value));
-            updateDashboard(slider.value); // Initial call
-        }
-        
-        // --- Initialization ---
-        document.addEventListener('DOMContentLoaded', () => {
-            // Only initialize dashboard if that page is ever shown to prevent errors
-            const dashboardObserver = new MutationObserver((mutationsList, observer) => {
-                for(const mutation of mutationsList) {
-                    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-                        const targetElement = mutation.target;
-                        if (targetElement.classList.contains('active') && !admissionsChart) {
-                            initializeDashboard();
-                            observer.disconnect(); // We only need to initialize it once
-                        }
-                    }
-                }
-            });
-
-            dashboardObserver.observe(document.getElementById('dashboard'), { attributes: true });
-        });
-
-    </script>
 </body>
 </html>

@@ -1,0 +1,65 @@
+/* Using Tailwind's @apply for base styles to keep HTML clean */
+@import 'https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css';
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+.gradient-bg {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.feature-icon {
+    @apply w-20 h-20 rounded-full flex items-center justify-center mx-auto shadow-lg;
+}
+
+/* Sidebar Navigation */
+.nav-link {
+    @apply flex items-center px-6 py-3 text-gray-600 hover:bg-gray-100 transition-colors duration-200;
+}
+
+.nav-link.active {
+    @apply bg-indigo-100 text-indigo-600 font-semibold border-r-4 border-indigo-500;
+}
+
+/* Map Styling */
+#map {
+    height: 450px;
+    border-radius: 0.75rem;
+    z-index: 10;
+}
+
+.leaflet-popup-content-wrapper {
+    border-radius: 0.5rem;
+}
+
+/* Loader Animation */
+.loader {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #6366f1;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Page View Management */
+.view {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Details Panel Styling */
+#details-panel {
+    max-height: 90vh;
+    overflow-y: auto;
+}

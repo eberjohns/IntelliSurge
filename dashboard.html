@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IntelliSurge Live Dashboard</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Leaflet.js Map Library -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="flex h-screen bg-gray-100">
+
+    <!-- Sidebar Navigation -->
+    <aside class="w-64 bg-white shadow-md flex-shrink-0">
+        <!-- ... existing aside content ... -->
+        <div class="p-6 gradient-bg text-white">
+            <h1 class="text-2xl font-bold">IntelliSurge</h1>
+            <p class="text-sm opacity-80">Live Command Center</p>
+        </div>
+        <nav class="mt-6">
+            <a href="#" id="nav-dashboard" class="nav-link active">
+                <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a2 2 0 002 2h10a2 2 0 002-2V10M9 20h6"></path></svg>
+                Live Dashboard
+            </a>
+            <a href="#" id="nav-trends" class="nav-link">
+                <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                Historical Trends
+            </a>
+            <div class="px-6 mt-6">
+                 <button id="reset-keys-btn" class="w-full text-sm text-center text-gray-500 hover:text-indigo-600">Reset API Keys</button>
+            </div>
+            <a href="index.html" class="nav-link mt-4 border-t pt-4">
+                 <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
+                Exit to Landing Page
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content (no changes here) -->
+    <main class="flex-1 overflow-y-auto p-8">
+        <!-- ... existing main content ... -->
+        <div id="view-dashboard" class="view active">
+            <!-- Header & Control -->
+            <div class="bg-white p-6 rounded-xl shadow-lg mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-3">Live Data Simulator (Mumbai)</h2>
+                <p class="text-gray-600 mb-4">Click to fetch live weather and health news data to calculate a real-time Patient Surge Score and update the entire dashboard.</p>
+                <button id="fetch-data-btn" class="w-full md-w-auto bg-indigo-600 text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-indigo-700 transition duration-300 flex items-center justify-center">
+                    <span id="button-text">Fetch Live Data & Recalculate</span>
+                </button>
+                 <div id="loader" class="loader mt-4 hidden mx-auto"></div>
+                 <p id="last-updated" class="text-sm text-gray-500 mt-3 text-center"></p>
+            </div>
+            <!-- Main Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Left Column -->
+                <div class="lg:col-span-2 space-y-8">
+                    <div id="kpi-cards" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <h3 class="text-xl font-semibold mb-4 text-center">Mumbai Hospital Network Status</h3>
+                        <div id="map"></div>
+                    </div>
+                </div>
+                <!-- Right Column -->
+                <div class="space-y-8">
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <h3 class="text-xl font-semibold mb-4 text-center">Predicted Admissions (24h)</h3>
+                        <canvas id="admissionsChart"></canvas>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <h3 class="text-xl font-semibold mb-4 text-center">Priority Actions</h3>
+                        <div id="recommendations" class="space-y-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Historical Trends View -->
+        <div id="view-trends" class="view hidden">
+            <div class="bg-white p-6 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Historical Surge Score (Last 7 Days)</h2>
+                <p class="text-gray-600 mb-6">This chart simulates the patient surge score over the past week, helping to identify patterns and periodic stress factors on the healthcare system.</p>
+                <canvas id="trendsChart"></canvas>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Hospital Details Panel (no changes) -->
+    <div id="details-panel-container" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+        <!-- ... -->
+    </div>
+    
+    <!-- ** NEW ** API Key Modal -->
+    <div id="api-key-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 hidden flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-md mx-4">
+            <h2 class="text-2xl font-bold mb-2">API Keys Required</h2>
+            <p class="text-gray-600 mb-6">To power the live demo, please enter your free API keys below. They will be saved in your browser's local storage for convenience.</p>
+            <div class="space-y-4">
+                <div>
+                    <label for="weather-api-key" class="block text-sm font-medium text-gray-700">WeatherAPI.com Key</label>
+                    <input type="password" id="weather-api-key" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    <a href="https://www.weatherapi.com/signup.aspx" target="_blank" class="text-xs text-indigo-600 hover:underline">Get a free key</a>
+                </div>
+                <div>
+                    <label for="news-api-key" class="block text-sm font-medium text-gray-700">NewsAPI.org Key</label>
+                    <input type="password" id="news-api-key" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    <a href="https://newsapi.org/register" target="_blank" class="text-xs text-indigo-600 hover:underline">Get a free key</a>
+                </div>
+            </div>
+            <button id="save-keys-btn" class="w-full bg-indigo-600 text-white font-semibold py-3 rounded-lg mt-8 hover:bg-indigo-700 transition">Save and Launch Demo</button>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
