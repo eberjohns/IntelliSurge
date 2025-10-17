@@ -1,65 +1,130 @@
-/* Using Tailwind's @apply for base styles to keep HTML clean */
-@import 'https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css';
-
+/* --- Base & Fonts --- */
 body {
     font-family: 'Inter', sans-serif;
+    background-color: #111827; /* bg-gray-900 */
+    color: #f3f4f6; /* text-gray-100 */
 }
 
-.gradient-bg {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+/* --- Main Sections --- */
+#scenario-section, #agent-workspace {
+    transition: opacity 0.5s ease-in-out;
 }
 
-.feature-icon {
-    @apply w-20 h-20 rounded-full flex items-center justify-center mx-auto shadow-lg;
+/* --- Reusable Components --- */
+.data-card {
+    background-color: #1f2937; /* bg-gray-800 */
+    padding: 1rem;
+    border-radius: 0.75rem; /* rounded-lg */
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+    border: 1px solid #374151; /* border-gray-700 */
 }
 
-/* Sidebar Navigation */
-.nav-link {
-    @apply flex items-center px-6 py-3 text-gray-600 hover:bg-gray-100 transition-colors duration-200;
+/* --- Agent's "Thought Process" Log --- */
+#agent-thought-process {
+    background-color: #000;
+    border: 1px solid #374151; /* border-gray-700 */
+    color: #a7f3d0; /* a light green for a terminal feel */
 }
 
-.nav-link.active {
-    @apply bg-indigo-100 text-indigo-600 font-semibold border-r-4 border-indigo-500;
+#agent-thought-process p {
+    margin-bottom: 0.5rem;
+    padding-left: 1.5rem;
+    position: relative;
+    opacity: 0;
+    animation: fadeIn 0.4s forwards;
+    line-height: 1.5;
 }
 
-/* Map Styling */
+#agent-thought-process p::before {
+    content: '>';
+    position: absolute;
+    left: 0;
+    color: #818cf8; /* indigo-400 */
+    margin-right: 0.5rem;
+    animation: blink 1s infinite;
+}
+
+/* --- Action Plan Items --- */
+.action-item {
+    background-color: #374151; /* bg-gray-700 */
+    padding: 0.75rem;
+    border-radius: 0.375rem; /* rounded-md */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.2s ease-in-out;
+    border-left: 4px solid transparent;
+}
+
+.action-item.approved {
+    background-color: #164e3b; /* Darker green */
+    border-left-color: #10b981; /* green-500 */
+}
+
+.action-item.rejected {
+    background-color: #6b2118; /* Darker red */
+    border-left-color: #ef4444; /* red-500 */
+    text-decoration: line-through;
+    opacity: 0.7;
+}
+
+.action-buttons button {
+    padding: 0.25rem 0.75rem;
+    font-size: 0.875rem; /* text-sm */
+    border-radius: 0.25rem; /* rounded */
+    transition: all 0.2s;
+    margin-left: 0.5rem;
+    color: white;
+}
+
+.approve-btn {
+    background-color: #166534; /* bg-green-700 */
+}
+.approve-btn:hover {
+    background-color: #15803d; /* bg-green-600 */
+}
+
+.reject-btn {
+    background-color: #991b1b; /* bg-red-700 */
+}
+.reject-btn:hover {
+    background-color: #b91c1c; /* bg-red-600 */
+}
+
+/* --- Feedback & Control Buttons --- */
+.feedback-btn {
+    flex: 1;
+    background-color: #4f46e5; /* bg-indigo-600 */
+    color: white;
+    font-weight: 600; /* font-semibold */
+    padding: 0.75rem 0;
+    border-radius: 0.5rem; /* rounded-lg */
+    transition: all 0.2s;
+}
+.feedback-btn:hover {
+    background-color: #4338ca; /* bg-indigo-700 */
+    transform: scale(1.03);
+}
+
+/* --- Map Styling --- */
 #map {
-    height: 450px;
-    border-radius: 0.75rem;
-    z-index: 10;
+    border-radius: 0.5rem; /* rounded-lg */
+    border: 1px solid #374151; /* border-gray-700 */
+}
+.leaflet-popup-content-wrapper, .leaflet-popup-tip {
+    background: #1f2937; /* bg-gray-800 */
+    color: white;
 }
 
-.leaflet-popup-content-wrapper {
-    border-radius: 0.5rem;
-}
-
-/* Loader Animation */
-.loader {
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid #6366f1;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* Page View Management */
-.view {
-    animation: fadeIn 0.5s ease-in-out;
-}
-
+/* --- Animations --- */
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    to {
+        opacity: 1;
+    }
 }
 
-/* Details Panel Styling */
-#details-panel {
-    max-height: 90vh;
-    overflow-y: auto;
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
 }
